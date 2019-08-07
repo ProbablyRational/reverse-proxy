@@ -17,9 +17,13 @@ class RouteController extends Controller
         $client = new \GuzzleHttp\Client();
         $method = strtolower($request->method());
 
+        $headers = $request->header();
+
+        unset($headers['host']);
+
         $params = [
             'query' => $_GET,
-            'headers' => $request->header(),
+            'headers' => $headers,
             'http_errors' => false
         ];
 
