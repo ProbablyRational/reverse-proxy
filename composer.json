@@ -12,5 +12,18 @@
             "email": "zachary.claretscott@probablyrational.com"
         }
     ],
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ProbablyRational\\ReverseProxy\\ReverseProxyServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "ProbablyRational\\ReverseProxy\\": "src/"
+        }
+    }
+
 }
