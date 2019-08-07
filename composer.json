@@ -1,0 +1,16 @@
+{
+    "name": "probablyrational/reverse-proxy",
+    "description": "A small pluign to reverse proxy requests for a route",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^6.3@dev"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Zachary Claret-Scott",
+            "email": "zachary.claretscott@probablyrational.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
