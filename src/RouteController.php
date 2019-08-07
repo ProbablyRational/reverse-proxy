@@ -4,7 +4,6 @@ namespace ProbablyRational\ReverseProxy;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class RouteController extends Controller
 {
@@ -12,23 +11,24 @@ class RouteController extends Controller
     {
         $url = config('reverseproxy.forward_url');
         if(is_null($url)){
-            return Response::json(['error' => 'Please make sure REVERSE_PROXY_FORWARD_URL is set in .env'], 500);
+            return response()->json(['error' => 'Please make sure REVERSE_PROXY_FORWARD_URL is set in .env'], 500);
         }
 
         $client = new \GuzzleHttp\Client();
+        $method = strtolower($request->method());
 
-        switch ($request->method()) {
-            case 'POST':
-                $myBody['name'] = "Demo";
-                $request = $client->post($url, ['body'=>$myBody]);
-                $response = $request->send();
-                break;
-            default:
-                $request = $client->get($url);
-                $response = $request->getBody();
-                break;
+        $params = [
+            'query' => $_GET,
+            'headers' => $request->header(),
+            'http_errors' => false
+        ];
+
+        if($request->method() == 'POST' || $request->method() == 'PUT'){
+            $params['form_params'] = $_POST;
         }
+        
+        $response = $client->$method($url, $params);
 
-        dd($response);
+        return response($response->getBody(), $response->getStatusCode())->withHeaders($response->getHeaders());
     }
 }
