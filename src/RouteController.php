@@ -28,7 +28,11 @@ class RouteController extends Controller
         ];
 
         if($request->method() == 'POST' || $request->method() == 'PUT'){
-            $params['form_params'] = $_POST;
+            if(!empty($request->getContent())){
+                $params['body'] = $request->getContent();
+            } else {
+                $params['form_params'] = $_POST;
+            }
         }
         
         $response = $client->$method($url, $params);
